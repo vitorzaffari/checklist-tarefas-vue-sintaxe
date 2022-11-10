@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist de Tarefas</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="App" class="parametros-box">
+        <div class="box-input">
+            <h1>Controle suas tarefas</h1>
+            <h2>Adicionar tarefa</h2>
+            <form v-on:submit="addTarefa">
+                <input type="text" minlength="1" v-model="novaTarefa.titulo" placeholder="Adicione sua tarefa">
+                <input class='box-adicionar' type="submit" value="Adicionar">
+
+            </form>
+        </div>
+        <div class="box-table">
+            <h2>Tarefas a fazer</h2>
+            <table>
+                <thead>
+                    <th>Pronta?</th>
+                    <th>Título</th>
+                    <th>Remover</th>
+                </thead>
+                <tbody>
+                    <tr v-for="tarefa in tarefas">
+                        <td><input class='box' type="checkbox" v-model="tarefa.pronta"></td>
+                        <td><span v-bind:class="{tarefaPronta: tarefa.pronta}">{{tarefa.titulo}}</span></td>
+                        <td><button v-on:click="removerTarefa(tarefa)">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.13/dist/vue.js"></script>
+
+    <script>
+        var tarefasApp = new Vue({
+            el: "#App",
+            data: {
+                tarefas: [
+                    { titulo: "Acordar", pronta: false },
+                    { titulo: "Café da manhã", pronta: false },
+
+                ],
+                novaTarefa: {
+                    titulo: ""
+                }
+            },
+            methods: {
+                addTarefa: function(e) {
+                    e.preventDefault();
+                    minlength=
+                    this.tarefas.push({ titulo: this.novaTarefa.titulo, pronta:false})
+                    this.novaTarefa.titulo = ""
+                },
+                removerTarefa: function(tarefa) {
+                    this.tarefas.splice(this.tarefas.indexOf(tarefa),1)
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
